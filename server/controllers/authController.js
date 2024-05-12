@@ -4,7 +4,7 @@ const {hashPassword, comparePassword} = require('../helpers/auth')
 const test = (req, res) => {
     res.json("test is working")
 }
-
+////////////Register User/////////////
 const registerUser = async (req, res) => {
     try {
         const {name, email, password} = req.body
@@ -40,28 +40,30 @@ const registerUser = async (req, res) => {
     }
 }
 
+
+////////////Login User/////////////
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-
+    console.log('login triggered');
     try {
-        // Find user by email
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(400).json({ error: 'Email not found. Sign up today!' });
+        const {email, password} = req.body
+        //check is user exist
+        const user = await User.findOne({email})
+        console.log(user);
+        if(!user){
+            return res.json({
+                error: "user not found"
+            })
         }
-
-        // Check if the provided password matches the stored hashed password
-        const isPasswordValid = await user.comparePassword(password);
-        if (!isPasswordValid) {
-            return res.status(400).json({ error: 'Incorrect Password' });
+        //check if password match
+        const match = await comparePassword(password, user.password)
+        console.log(password);
+        console.log(user.password);
+        console.log(match);
+        if(match){
+            return res.json('Password match')
         }
-
-        // If email and password are correct, login is successful
-        res.json({ success: 'Login successful' });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
