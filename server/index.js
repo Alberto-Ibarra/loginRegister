@@ -14,12 +14,13 @@ app.use(cors({
 }));
 
 app.use(express.json()); // Parse JSON bodies
+app.use('/api', authRoutes); // Prefix the routes with '/api'
+
 
 // Database connection
 mongoose.connect(process.env.MONGOURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Database connection error:', err));
 
-app.use('/api', authRoutes); // Prefix the routes with '/api'
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
