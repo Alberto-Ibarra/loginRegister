@@ -63,7 +63,15 @@ const loginUser = async (req, res) => {
                     return res.status(500).json({ error: 'Internal server error' });
                 }
                 //res.cookie('token', token).json(user)
-                res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' }).json({ user, token });
+                //res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' }).json({ user, token });
+                res.cookie('token', token, {
+                    httpOnly: true, // Cookie is accessible only via HTTP(S)
+                    secure: true,   // Cookie is sent only over HTTPS
+                    sameSite: 'lax', // Apply same-site policy (optional)
+                    maxAge: 3600000, // Cookie expiration time in milliseconds (optional)
+                    path: '/',       // Path for which the cookie is valid (optional)
+                    domain: 'yourdomain.com' // Domain for which the cookie is valid (optional)
+                });
             })
             return res.json('Password match')
         }
