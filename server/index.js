@@ -15,9 +15,10 @@ app.use(cors({
 }));
 
 app.use(express.json()); // Parse JSON bodies
-app.use('/api', authRoutes); // Prefix the routes with '/api'
 app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
+
+app.use('/api', authRoutes); // Prefix the routes with '/api'
 
 
 // Database connection
