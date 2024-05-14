@@ -2,7 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose'); 
-const authRoutes = require('./routes/authRoutes'); 
+const authRoutes = require('./routes/authRoutes');
+const cookieParser = require('cookie-parser') 
 
 const app = express();
 const port = 8000;
@@ -15,6 +16,8 @@ app.use(cors({
 
 app.use(express.json()); // Parse JSON bodies
 app.use('/api', authRoutes); // Prefix the routes with '/api'
+app.use(cookieParser())
+app.use(express.urlencoded({extended: false}))
 
 
 // Database connection
