@@ -48,7 +48,6 @@ const loginUser = async (req, res) => {
         const {email, password} = req.body
         //check is user exist
         const user = await User.findOne({email})
-        console.log(user);
         if(!user){
             return res.json({
                 error: "user not found"
@@ -56,9 +55,6 @@ const loginUser = async (req, res) => {
         }
         //check if password match
         const match = await comparePassword(password, user.password)
-        console.log(password);
-        console.log(user.password);
-        console.log(match);
         if(match){
             return res.json('Password match')
         }
