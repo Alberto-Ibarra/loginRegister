@@ -16,7 +16,7 @@ export default function Register() {
         const {name, email, password} = data;
         try {
             const {data} = await axios.post('api/register', {
-                name, email, password
+                name, email, password   
             })
             if(data.error){
                 toast.error(data.error)
